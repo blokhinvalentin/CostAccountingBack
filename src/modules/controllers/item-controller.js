@@ -1,30 +1,29 @@
-const Item = require('../../models/item');
+const Spending = require('../../models/item');
 
 const getItems = (req, res) => {
   try {
-    Item.find().then(result => {
+    Spending.find().then(result => {
       res.status(200).send(result);
     });
-  }
-  catch(error) {
+  } catch (error) {
     res.status(400).send('can get all items');
   }
 }
 
 const addItem = (req, res) => {
   try {
-    const { where, when, cost } = req.body;
+    const { where, cost } = req.body;
 
-    if (where === '' || cost === '') {
+    if ((where === '') || (typeof where !== 'string')
+    || (cost === '') || (typeof cost !== 'number')) {
       throw new Error('something is empty');
     }
 
-    const item = new Item({ where, when, cost });
+    const item = new Spending({ where, cost });
     item.save().then(() => {
-      getItems(req, res);
+      res.status(200).send(item);
     });
-  }
-  catch(error) {
+  } catch (error) {
     res.status(400).send('can add item');
   }
 }
@@ -32,18 +31,25 @@ const addItem = (req, res) => {
 const editItem = (req, res) => {
   try {
     const { _id, where, when, cost } = req.body;
-    if (!req.body.hasOwnProperty('_id') || where === '' || when === '' || cost === '') {
+
+    if (!req.body.hasOwnProperty('_id') 
+      || where === '' 
+      || when === '' 
+      || cost === ''
+      || typeof where !== 'string'
+      || typeof cost !== 'string'
+    ) {
       throw new Error('unable to update text');
     }
 
-    Item.updateOne(
+    Spending.findOneAndUpdate(
       { _id }, 
-      { $set: { where: where, when: when, cost: cost } }
-      ).then(() => {
-      getItems(req, res);
+      { $set: { where, when, cost } },
+      { new: true }
+      ).then(result => {
+        res.status(200).send(result);
     });
-  }
-  catch(error) {
+  } catch (error) {
     res.status(400).send("cant edit item");
   }
 }
@@ -56,11 +62,10 @@ const deleteItem = (req, res) => {
 
     const _id = req.body._id;
     
-    Item.deleteOne({ _id }).then(result => {
+    Spending.deleteOne({ _id }).then(result => {
       res.status(200).send(result);
     })
-  }
-  catch(error) {
+  } catch (error) {
     res.status(400).send('cant delete item');
   }
 }
