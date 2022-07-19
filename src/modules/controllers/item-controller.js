@@ -12,16 +12,19 @@ const getItems = (req, res) => {
 
 const addItem = (req, res) => {
   try {
-    const { where, cost } = req.body;
+    const { place, cost } = req.body;
 
-    if ((where === '') || (typeof where !== 'string')
-    || (cost === '') || (typeof cost !== 'number')) {
-      throw new Error('something is empty');
+    if ((place === '')
+      || (typeof place !== 'string')
+      || (cost === '')
+      || (typeof cost !== 'number')
+    ) {
+      throw new Error('something is empty or wrong type');
     }
 
-    const item = new Spending({ where, cost });
-    item.save().then(() => {
-      res.status(200).send(item);
+    const item = new Spending({ place, cost });
+    item.save().then(result => {
+      res.status(200).send(result);
     });
   } catch (error) {
     res.status(400).send('can add item');
@@ -30,24 +33,26 @@ const addItem = (req, res) => {
 
 const editItem = (req, res) => {
   try {
-    const { _id, where, when, cost } = req.body;
+    const { place, time, cost } = req.body;
+    const _id = req.params._id;
 
-    if (!req.body.hasOwnProperty('_id') 
-      || where === '' 
-      || when === '' 
+    if (!req.params.hasOwnProperty('_id') 
+      || place === '' 
+      || time === '' 
       || cost === ''
-      || typeof where !== 'string'
-      || typeof cost !== 'string'
+      || typeof place !== 'string'
+      || typeof time !== 'string'
+      || typeof cost !== 'number'
     ) {
       throw new Error('unable to update text');
     }
 
     Spending.findOneAndUpdate(
       { _id }, 
-      { $set: { where, when, cost } },
+      { $set: { place, time, cost } },
       { new: true }
-      ).then(result => {
-        res.status(200).send(result);
+    ).then(result => {
+      res.status(200).send(result);
     });
   } catch (error) {
     res.status(400).send("cant edit item");
@@ -56,13 +61,13 @@ const editItem = (req, res) => {
 
 const deleteItem = (req, res) => {
   try { 
-    if (!req.body.hasOwnProperty('_id')) {
+    if (!req.params.hasOwnProperty('_id')) {
       throw new Error('id is unreachable to read');
     }
 
-    const _id = req.body._id;
+    const _id = req.params._id;
     
-    Spending.deleteOne({ _id }).then(result => {
+    Spending.findOneAndDelete({ _id }).then(result => {
       res.status(200).send(result);
     })
   } catch (error) {

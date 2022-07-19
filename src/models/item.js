@@ -3,12 +3,12 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const spendingsSchema = new Schema({
-  where: { 
+  place: { 
     type: String,
     required: true
   },
-  when: {
-    type: Date  ,
+  time: {
+    type: Date,
     default: Date.now()
   },
   cost: {
@@ -17,4 +17,4 @@ const spendingsSchema = new Schema({
   }
 });
 
-module.exports = Spending = mongoose.model('MySpendings', spendingsSchema);
+module.exports = Spending = mongoose.model('Spendings', spendingsSchema);

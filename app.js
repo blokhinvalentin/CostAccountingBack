@@ -17,8 +17,7 @@ const launch = () => {
     app.listen(8000, () => {
       console.log('connected to port 8000');
     });
-  }
-  catch(error) {
+  } catch (error) {
     console.log(error);
     process.exit(1);
   }
