@@ -2,15 +2,15 @@ const express = require('express');
 const router = express.Router();
 
 const {
-  getItems,
-  addItem,
-  editItem,
-  deleteItem
+  getSpendings,
+  addSpending,
+  editSpending,
+  deleteSpending
 } = require('../controllers/item-controller');
 
-router.get('/items', getItems);
-router.post('/items', addItem);
-router.patch('/items/:_id', editItem);
-router.delete('/items/:_id', deleteItem);
+router.get('/spendings', getSpendings);
+router.post('/spendings/new-spending', addSpending);
+router.patch('/spendings/:_id', editSpending);
+router.delete('/spendings/:_id', deleteSpending);
 
 module.exports = router;

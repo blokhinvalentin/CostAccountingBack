@@ -1,6 +1,6 @@
 const Spending = require('../../models/item');
 
-const getItems = (req, res) => {
+const getSpendings = (req, res) => {
   try {
     Spending.find().then(result => {
       res.status(200).send(result);
@@ -10,7 +10,7 @@ const getItems = (req, res) => {
   }
 }
 
-const addItem = (req, res) => {
+const addSpending = (req, res) => {
   try {
     const { place, cost } = req.body;
 
@@ -31,7 +31,7 @@ const addItem = (req, res) => {
   }
 }
 
-const editItem = (req, res) => {
+const editSpending = (req, res) => {
   try {
     const { place, time, cost } = req.body;
     const _id = req.params._id;
@@ -59,7 +59,7 @@ const editItem = (req, res) => {
   }
 }
 
-const deleteItem = (req, res) => {
+const deleteSpending = (req, res) => {
   try { 
     if (!req.params.hasOwnProperty('_id')) {
       throw new Error('id is unreachable to read');
@@ -76,8 +76,8 @@ const deleteItem = (req, res) => {
 }
 
 module.exports = {
-  getItems,
-  addItem,
-  editItem,
-  deleteItem
+  getSpendings,
+  addSpending,
+  editSpending,
+  deleteSpending
 }
