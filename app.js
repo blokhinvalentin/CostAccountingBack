@@ -4,7 +4,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const app = express();
 
-const apiRoutes = require('./src/modules/routes/item-router');
+const apiRoutes = require('./src/modules/routes/spendings-router');
 
 app.use(cors());
 
@@ -18,7 +18,7 @@ const launch = () => {
       console.log('connected to port 8000');
     });
   } catch (error) {
-    console.log(error);
+    console.error('something went wrong');
     process.exit(1);
   }
 }

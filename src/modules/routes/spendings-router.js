@@ -9,7 +9,7 @@ const {
 } = require('../controllers/item-controller');
 
 router.get('/spendings', getSpendings);
-router.post('/spendings/new-spending', addSpending);
+router.post('/spendings', addSpending);
 router.patch('/spendings/:_id', editSpending);
 router.delete('/spendings/:_id', deleteSpending);
 

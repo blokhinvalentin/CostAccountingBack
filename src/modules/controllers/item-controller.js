@@ -1,4 +1,8 @@
-const Spending = require('../../models/item');
+const Spending = require('../../models/spending');
+const {
+  ifStringOrEmpty,
+  ifNumberOrEmpty
+} = require('../../helpers/validation');
 
 const getSpendings = (req, res) => {
   try {
@@ -14,11 +18,7 @@ const addSpending = (req, res) => {
   try {
     const { place, cost } = req.body;
 
-    if ((place === '')
-      || (typeof place !== 'string')
-      || (cost === '')
-      || (typeof cost !== 'number')
-    ) {
+    if (ifStringOrEmpty(place) || ifNumberOrEmpty(cost)) {
       throw new Error('something is empty or wrong type');
     }
 
@@ -37,13 +37,11 @@ const editSpending = (req, res) => {
     const _id = req.params._id;
 
     if (!req.params.hasOwnProperty('_id') 
-      || place === '' 
-      || time === '' 
-      || cost === ''
-      || typeof place !== 'string'
-      || typeof time !== 'string'
-      || typeof cost !== 'number'
+      || ifStringOrEmpty(place)
+      || ifStringOrEmpty(time)
+      || ifNumberOrEmpty(cost)
     ) {
+      console.log('111');
       throw new Error('unable to update text');
     }
 
@@ -80,4 +78,4 @@ module.exports = {
   addSpending,
   editSpending,
   deleteSpending
-}
+};
