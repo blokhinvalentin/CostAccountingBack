@@ -6,7 +6,7 @@ const {
   addSpending,
   editSpending,
   deleteSpending
-} = require('../controllers/item-controller');
+} = require('../controllers/spendings-controller');
 
 router.get('/spendings', getSpendings);
 router.post('/spendings', addSpending);

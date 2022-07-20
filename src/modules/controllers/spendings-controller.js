@@ -1,7 +1,7 @@
 const Spending = require('../../models/spending');
 const {
-  ifStringOrEmpty,
-  ifNumberOrEmpty
+  stringValidation,
+  numberValidation
 } = require('../../helpers/validation');
 
 const getSpendings = (req, res) => {
@@ -18,7 +18,7 @@ const addSpending = (req, res) => {
   try {
     const { place, cost } = req.body;
 
-    if (ifStringOrEmpty(place) || ifNumberOrEmpty(cost)) {
+    if (!stringValidation(place) || !numberValidation(cost)) {
       throw new Error('something is empty or wrong type');
     }
 
@@ -37,11 +37,10 @@ const editSpending = (req, res) => {
     const _id = req.params._id;
 
     if (!req.params.hasOwnProperty('_id') 
-      || ifStringOrEmpty(place)
-      || ifStringOrEmpty(time)
-      || ifNumberOrEmpty(cost)
+      || !stringValidation(place)
+      || !stringValidation(time)
+      || !numberValidation(cost)
     ) {
-      console.log('111');
       throw new Error('unable to update text');
     }
 
@@ -53,7 +52,7 @@ const editSpending = (req, res) => {
       res.status(200).send(result);
     });
   } catch (error) {
-    res.status(400).send("cant edit item");
+    res.status(400).send('cant edit item');
   }
 }
 
