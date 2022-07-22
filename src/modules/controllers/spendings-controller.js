@@ -10,7 +10,7 @@ const getSpendings = (req, res) => {
       res.status(200).send(result);
     });
   } catch (error) {
-    res.status(400).send('can get all items');
+    res.status(400).send('can get all spendings');
   }
 }
 
@@ -22,12 +22,12 @@ const addSpending = (req, res) => {
       throw new Error('something is empty or wrong type');
     }
 
-    const item = new Spending({ place, cost });
-    item.save().then(result => {
+    const spending = new Spending({ place, cost });
+    spending.save().then(result => {
       res.status(200).send(result);
     });
   } catch (error) {
-    res.status(400).send('can add item');
+    res.status(400).send('can add spending');
   }
 }
 
@@ -52,7 +52,7 @@ const editSpending = (req, res) => {
       res.status(200).send(result);
     });
   } catch (error) {
-    res.status(400).send('cant edit item');
+    res.status(400).send('cant edit spending');
   }
 }
 
@@ -68,7 +68,7 @@ const deleteSpending = (req, res) => {
       res.status(200).send(result);
     })
   } catch (error) {
-    res.status(400).send('cant delete item');
+    res.status(400).send('cant delete spending');
   }
 }
 
